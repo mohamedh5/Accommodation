@@ -13,7 +13,7 @@ import com.iter.accommodation.factory.AccomodationFactory;
 import com.iter.accommodation.service.AccomodationService;
 
 @RestController
-@RequestMapping("/accomodations")
+@RequestMapping("/accomodation")
 public class AccomodationController {
 
 	private AccomodationFactory factory;
