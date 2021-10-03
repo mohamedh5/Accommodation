@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.iter.accommodation.dto.HotelsSearchDto;
 import com.iter.accommodation.dto.LocationDto;
 import com.iter.accommodation.factory.AccomodationFactory;
 import com.iter.accommodation.service.AccomodationService;
@@ -28,5 +29,11 @@ public class AccomodationController {
 			@RequestHeader(required = false) String provider) {
 		AccomodationService service = factory.getService(provider);
 		return service.getLocations(place);
+	}
+
+	@GetMapping("/hotels/search")
+	public HotelsSearchDto getHotels(@RequestHeader(required = false) String provider) {
+		AccomodationService service = factory.getService(provider);
+		return service.getHotels();
 	}
 }

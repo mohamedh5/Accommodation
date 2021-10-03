@@ -11,7 +11,10 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import com.iter.accommodation.booking.dto.HotelsSearch;
+import com.iter.accommodation.booking.dto.HotelsSearchRequestParam;
 import com.iter.accommodation.booking.dto.Location;
+import com.iter.accommodation.booking.mapper.HotelsSearchRequestMapper;
 import com.iter.accommodation.config.ClientConfig;
 import com.iter.accommodation.dto.Provider;
 
@@ -39,6 +42,18 @@ public class BookingHttpClient {
 		ResponseEntity<List<Location>> responseEntity = template.exchange(uri, HttpMethod.GET, entity,
 				new ParameterizedTypeReference<List<Location>>() {
 				});
+		return responseEntity.getBody();
+	}
+
+	public HotelsSearch getHotelSearchResults(HotelsSearchRequestParam params) {
+		String searchURL = booking.getUrls().get("search");
+		String uri = HotelsSearchRequestMapper.buildURI(searchURL, params);
+
+		HttpHeaders headers = getMandatoryHeaders();
+		HttpEntity<?> entity = new HttpEntity<>(headers);
+
+		ResponseEntity<HotelsSearch> responseEntity = template.exchange(uri, HttpMethod.GET, entity,
+				HotelsSearch.class);
 		return responseEntity.getBody();
 	}
 
